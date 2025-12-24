@@ -27,198 +27,199 @@ Publish the website in the given URL.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Disney Princesses</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Great Vibes', cursive;
-      background: linear-gradient(120deg, #f0e4d7, #f8c3c1, #d3a6d6);
-      color: #333;
-      background-size: 300% 300%;
-      animation: backgroundShift 12s ease infinite;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singapore</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-    @keyframes backgroundShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 42px;
+            color: rgb(0, 0, 0);
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
 
-    h1 {
-      text-align: center;
-      font-size: 3.5rem;
-      margin: 40px 0 20px;
-      background: linear-gradient(to right, #ff66b2, #ffccff);
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    }
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+            gap: 10px;
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      padding: 30px;
-      max-width: 1400px;
-      margin: auto;
-    }
+        .gallery-item img {
+            width: 100%; 
+            height: 300px; 
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
 
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
+        .gallery-item img:hover {
+            transform: scale(1.30);
+            cursor: pointer;
+        }
 
-    .gallery-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 20px 40px rgba(255, 105, 180, 0.5);
-    }
+        .slider {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            text-align: center;
+        }
 
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
+        .slider img {
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            transition: opacity 0.5s ease;
+        }
 
-    .gallery-item:hover img {
-      transform: scale(1.15);
-    }
+        .arrow {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: white;
+            user-select: none;
+            padding: 10px;
+        }
 
-    .caption {
-      position: absolute;
-      bottom: 0;
-      background: rgba(255, 255, 255, 0.85);
-      width: 100%;
-      padding: 12px;
-      text-align: center;
-      font-size: 16px;
-      color: #9b59b6;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
+        .arrow.left {
+            left: 10px;
+            color: aqua;
+        }
 
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.95);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
+        .arrow.right {
+            right: 10px;
+            color: aqua;
+        }
 
-    .modal img {
-      max-width: 90%;
-      max-height: 90%;
-      border: 5px solid #ff66b2;
-      border-radius: 12px;
-      box-shadow: 0 0 40px #ff66b2;
-    }
+        .arrow:hover {
+            color: lightgray;
+        }
 
-    .modal .close {
-      position: absolute;
-      top: 25px;
-      right: 35px;
-      font-size: 40px;
-      color: #fff;
-      cursor: pointer;
-      text-shadow: 0 0 15px #ff66b2;
-    }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: rgb(0, 255, 251);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 5px;
+            display: none;
+        }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 18px;
-      font-family: 'Dancing Script', cursive;
-      color: #fff;
-      background-color: #9b59b6;
-      border-top: 4px solid #ffccff;
-    }
-  </style>
+        .close-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
 </head>
 <body>
+    <div class="title">NATURE</div> 
+    
+    <div class="gallery-container">
+        <div class="gallery-item">
+            <img src="image1.png" alt="Image 1">
+        </div>
+        <div class="gallery-item">
+            <img src="image2.png" alt="Image 2">
+        </div>
+        <div class="gallery-item">
+            <img src="image3.png" alt="Image 3">
+        </div>
+        <div class="gallery-item">
+            <img src="image4.png" alt="Static Image">
+        </div>
+        <div class="gallery-item">
+            <img src="image5.png" alt="Image 5">
+        </div>
+    </div>
 
-  <h1>👑 Disney Princesses</h1>
+    <div class="slider" id="slider">
+        <button class="close-btn" id="close-btn">&#10006;</button>
+        <span class="arrow left" id="prev">&#10094;</span>
+        <img src="" alt="Slider Image" id="slider-img">
+        <span class="arrow right" id="next">&#10095;</span>
+    </div>
 
-  <div class="gallery">
-    <div class="gallery-item" onclick="openModal('cin.jpg')">
-      <img src="cin.jpg" alt="Cinderella">
-      <div class="caption">Cinderella</div>
-    </div>
-    <div class="gallery-item" onclick="openModal('sw.jpg')">
-      <img src="sw.jpg" alt="Snow White">
-      <div class="caption">Snow White</div>
-    </div>
-    <div class="gallery-item" onclick="openModal('ar.jpg')">
-      <img src="ar.jpg" alt="Aurora">
-      <div class="caption">Aurora</div>
-    </div>
-    <div class="gallery-item" onclick="openModal('al.jpg')">
-      <img src="al.jpg" alt="Ariel">
-      <div class="caption">Ariel</div>
-    </div>
-    <div class="gallery-item" onclick="openModal('be.jpg')">
-      <img src="be.jpg" alt="Belle">
-      <div class="caption">Belle</div>
-    </div>
-    <div class="gallery-item" onclick="openModal('rap.jpg')">
-      <img src="rap.jpg" alt="Rapunzel">
-      <div class="caption">Rapunzel</div>
-    </div>
-    <div class="gallery-item" onclick="openModal('mer.jpg')">
-      <img src="mer.jpg" alt="Merida">
-      <div class="caption">Merida</div>
-    </div>
-    <div class="gallery-item" onclick="openModal('moa.jpg')">
-      <img src="moa.jpg" alt="Moana">
-      <div class="caption">Moana</div>
-    </div>
-  </div>
+    <script>
+        const images = document.querySelectorAll('.gallery-item img');
+        const slider = document.getElementById('slider');
+        const sliderImg = document.getElementById('slider-img');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        const closeBtn = document.getElementById('close-btn');
 
-  <!-- Modal -->
-  <div class="modal" id="imageModal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img id="modalImage" src="" alt="Princess">
-  </div>
+        let currentIndex = 0;
+        images.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                slider.style.display = 'block';
+                sliderImg.src = image.src;
+                currentIndex = index;
+                closeBtn.style.display = 'block'; 
+            });
+        });
 
-  <footer>
-    &copy; 2025 designed by ABIRAMI (24900822). All Rights Reserved.
-  </footer>
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            sliderImg.src = images[currentIndex].src;
+        });
 
-  <script>
-    function openModal(src) {
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImage');
-      modalImg.src = src;
-      modal.style.display = 'flex';
-    }
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            currentIndex = (currentIndex + 1) % images.length;
+            sliderImg.src = images[currentIndex].src;
+        });
 
-    function closeModal() {
-      const modal = document.getElementById('imageModal');
-      modal.style.display = 'none';
-    }
-  </script>
+        closeBtn.addEventListener('click', () => {
+            slider.style.display = 'none';
+            closeBtn.style.display = 'none';
+        });
+
+        slider.addEventListener('click', () => {
+            slider.style.display = 'none';
+            closeBtn.style.display = 'none';
+        });
+    </script>
+
 </body>
 </html>
 ```
 # OUTPUT:
-![alt text](<Screenshot 2025-05-11 012202.png>)
+![Screenshot (125)](https://github.com/user-attachments/assets/e9b4e569-e389-46a6-9383-397c8a605422)
+![Screenshot (127)](https://github.com/user-attachments/assets/f14902a7-12be-439e-9757-d4362715094c)
+![Screenshot (129)](https://github.com/user-attachments/assets/de529e65-6680-4056-aa8b-a2d232dbaa65)
 
-![alt text](<Screenshot 2025-05-11 012214.png>)
 
-![alt text](<Screenshot 2025-05-11 012225.png>)
 
-![alt text](<Screenshot 2025-05-11 012238.png>)
 
-![alt text](<Screenshot 2025-05-11 012247.png>)
+
+
 
 # RESULT:
 The program for designing an interactive image gallery using HTML, CSS and JavaScript is executed successfully.
